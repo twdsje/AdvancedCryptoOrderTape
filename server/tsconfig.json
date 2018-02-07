@@ -15,7 +15,8 @@
     "experimentalDecorators": true,
     "outDir": "build",
     "sourceMap": true,
-    "allowJs": true
+    "allowJs": true,
+	"jsx": "react"
   },
   "exclude": [
     "node_modules"

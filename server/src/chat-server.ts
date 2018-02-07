@@ -5,10 +5,10 @@ import * as socketIo from 'socket.io';
 import * as GTT from 'gdax-trading-toolkit';
 import { GDAXFeed } from "gdax-trading-toolkit/build/src/exchanges/gdax/gdaxfeed";
 import { TradeMessage } from "gdax-trading-toolkit/build/src/core/messages";
-
+import { LiveOrderbook, LiveBookConfig } from "gdax-trading-toolkit/build/src/core/liveorderbook";
 
 export class ChatServer {
-    public static readonly PORT:number = 3000;
+    public static readonly PORT:number = 8000;
     private app: express.Application;
     private server: Server;
     private io: SocketIO.Server;
@@ -19,7 +19,6 @@ export class ChatServer {
         this.config();
         this.createServer();
         this.sockets();
-		this.mountRoutes();
         this.listen();
 		this.startStreaming();
     }
@@ -59,25 +58,20 @@ export class ChatServer {
 		const products: string[] = ['BTC-USD'];
 
 		GTT.Factories.GDAX.FeedFactory(logger, products).then((feed: GDAXFeed) => {
-			feed.on('data', (msg: TradeMessage) => {
-				if(parseInt(msg.size) > 1) {
-					//let m =`${msg.time.getHours()}:${msg.time.getMinutes()}:${msg.time.getSeconds()}:${msg.time.getMilliseconds()} ${msg.side} ${msg.price} ${msg.size}`;
-					this.io.emit('message', msg);
-					//console.log(m);
-				}
+			const config: LiveBookConfig = {
+				product: 'BTC-USD',
+				logger: logger
+			};
+			const book = new LiveOrderbook(config);
+			feed.pipe(book);
+			
+			book.on('LiveOrderbook.trade', (msg: TradeMessage) =>{
+				this.io.emit('message', msg);
 			});
 		}).catch((err: Error) => {
 			logger.log('error', err.message);
 			process.exit(1);
 		});
-	}
-	
-	private mountRoutes (): void {
-		const router = express.Router()
-		router.get('/', (req, res) => {
-			res.sendFile(__dirname + '/index.html');
-		})
-		this.app.use('/', router)
 	}
 
     public getApp(): express.Application {
