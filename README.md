@@ -1,33 +1,31 @@
-<p align="center">
-    <a href="https://github.com/luixaviles/socket-io-typescript-chat">
-        <img src="https://img.shields.io/github/stars/luixaviles/socket-io-typescript-chat.svg?style=social&label=Star" alt="GitHub stars">
-    </a>
-    <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fluixaviles%2Fsocket-io-typescript-chat&via=luixaviles&text=Take%20a%20look%20this%20%23TypeScript%20chat%20project%20using%20%23Node%20and%20%23Angular%20Material">
-        <img src="https://img.shields.io/twitter/url/https/github.com/luixaviles/socket-io-typescript-chat.svg?style=social" alt="Tweet">
-    </a>
-</p>
-
-A Socket.io Chat Example Using TypeScript
+AdvancedCryptoOrderTape
 =========================================
 
-This repository contains server & client side code using `TypeScript` language
+A tape that shows all fills coming from the GDAX exchange with filters to specify which size of orders to show.
 
-## Running
-You're on your own until I get around to writing a guide.
-
-# Develop
-1. NodeJS - Download and Install latest version of Node: [NodeJS](http://http://nodejs.org)
+## Usage
+1. Install NPM package manager [NPM](https://www.npmjs.com/get-npm)
 2. Git - Download and Install [Git](http://git-scm.com)
-
-After that, use `Git bash` to run all commands if you are on Windows platform.
-
-## Clone repository
-
-In order to start the project use:
-
+3. Open a new git bash window in the directory you wish to install to.
+3. Check out the project.
 ```bash
 $ git clone https://github.com/twdsje/AdvancedCryptoOrderTape.git
 ```
+5. Build and start server:
+```bash
+$ cd server
+$ npm install
+$ gulp
+$ npm start 
+```
+6. Build and start client
+```bash
+$ cd reactclient
+$ npm install
+$ npm start 
+```
+8. Browser should open to http://localhost:3000
+
 
 
 # Support
