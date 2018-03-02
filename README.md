@@ -30,7 +30,7 @@ $ npm start
 
 
 
-# Support
+# Support This Project
 Consider subscribing to my patreon at: https://patreon.com/speculatorseth
 
 
