@@ -3,7 +3,7 @@ AdvancedCryptoOrderTape
 
 A tape that shows all fills coming from the GDAX exchange with filters to specify which size of orders to show.
 
-## Usage
+## Dev Usage
 1. Install NPM package manager [NPM](https://www.npmjs.com/get-npm)
 2. Git - Download and Install [Git](http://git-scm.com)
 3. Open a new git bash window in the directory you wish to install to.
@@ -13,18 +13,11 @@ $ git clone https://github.com/twdsje/AdvancedCryptoOrderTape.git
 ```
 5. Build and start server:
 ```bash
-$ cd server
-$ npm install
-$ gulp
-$ npm start 
-```
-6. Build and start client
-```bash
-$ cd reactclient
 $ npm install
 $ npm start 
 ```
-8. Browser should open to http://localhost:3000
+
+8. Open browser to http://localhost:8080
 
 
 
