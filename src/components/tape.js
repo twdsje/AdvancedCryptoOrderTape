@@ -11,7 +11,7 @@ type TapeState = {
 type TradeMessage = {
     productId: string;
     side: string;
-    tradeId: string;
+    trade_id: string;
     price: number;
     size: number;
     time: string;
@@ -28,7 +28,9 @@ export class Tape extends React.Component<TapeProps, TapeState> {
     this.minSizeChange = this.minSizeChange.bind(this);
   }
 
-  addRow(input: TradeMessage) {
+  addRow(msg: event) {
+	let input: TradeMessage = JSON.parse(msg.data);
+	
     if (input.size > this.state.minSize) {
       let orders: TradeMessage[] = this.state.orders;
       orders.unshift(input);
@@ -60,7 +62,7 @@ export class Tape extends React.Component<TapeProps, TapeState> {
         </thead>
         <tbody>
           {this.state.orders.map((order) => 
-            <Order key={order.tradeId} time={order.time} size={order.size} price={order.price} side={order.side} />
+            <Order key={order.trade_id} time={order.time} size={order.size} price={order.price} side={order.side} />
           )}
         </tbody>
       </table>
