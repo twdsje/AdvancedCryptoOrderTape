@@ -5,6 +5,7 @@ type Props = {
   size: Number,
   price: Number,
   side: string,
+  fills: Number
 };
 type State = {
   time: string,
@@ -28,7 +29,7 @@ export class Order extends React.Component<Props, State> {
     var formatedDate = `${hourst}:${minutest}:${secondst}.${millist}`;
 
     // Format the price
-    var priceStr = props.price.toString();
+    var priceStr = props.price;
     var formatedPrice = priceStr.substring(0, priceStr.length - 6);
 
     this.state = {time: formatedDate, price: formatedPrice};
@@ -48,6 +49,7 @@ export class Order extends React.Component<Props, State> {
           <td className="time">{this.state.time}</td>
           <td>{this.props.size}</td>
           <td>{this.state.price}</td>
+		  <td>{this.props.fills}</td>
         </tr>
     );
   }
