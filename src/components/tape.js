@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { subscribeToTimer } from '../api';
 import { Order } from './order';
+import { DiffMeter } from './diffmeter';
 var bigdecimal = require("bigdecimal");
 
 type TapeProps = {};
@@ -88,11 +89,7 @@ export class Tape extends React.Component<TapeProps, TapeState> {
       <div className="controls">
         <label>Min Size</label><input type="text" onChange={this.minSizeChange} />
       </div>
-	  <div className="powerbar">
-	    <div className="totalBuys">{this.state.totalBuys}</div>
-		<div className="cumulativeDelta">{this.state.cumulativeDelta}</div>
-		<div className="totalSells">{this.state.totalSells}</div>
-	  </div>
+	  <DiffMeter buys={this.state.totalBuys} sells={this.state.totalSells} delta={this.state.cumulativeDelta} />	    
       <table>
         <thead>
         <tr>
