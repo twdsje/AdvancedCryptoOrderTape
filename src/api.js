@@ -1,14 +1,14 @@
-function subscribeToTimer(cb) {
+function subscribeToTimer(cb, instrument) {
   console.log('Opening socket');
   const socket = new WebSocket('wss://ws-feed.gdax.com');
   
   socket.addEventListener('open', function(event) {
-	console.log('Subscribing');
+	console.log(`Subscribing to ${instrument}`);
 	
 	
-	var subscribe = '{"type": "subscribe", "channels": [{"name": "matches", "product_ids": ["BTC-USD"]}]}';
+	var subscribe = `{"type": "subscribe", "channels": [{"name": "matches", "product_ids": ["${instrument}"]}]}`;
 	socket.send(subscribe);
-
+  console.log('Receiving data');
 	socket.addEventListener('close', function(event) {
 	  console.log('Client disconnected.');
     });    
@@ -19,5 +19,9 @@ function subscribeToTimer(cb) {
   //});
   
   socket.addEventListener('message', timestamp => cb(null, timestamp));
+  
+  
+  
+  return () => {socket.close();}
 }
 export { subscribeToTimer };

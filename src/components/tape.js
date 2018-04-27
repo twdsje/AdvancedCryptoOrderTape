@@ -28,10 +28,11 @@ export class Tape extends React.Component<TapeProps, TapeState> {
   constructor(props: TapeProps) {
     super(props);
     let initialArray: TradeMessage[] = [];
-    this.state = {orders: initialArray, minSize: 0, totalBuys: "0.0", totalSells: "0.0", cumulativeDelta: "0.0"};
-    subscribeToTimer((err: Error, input: TradeMessage) => this.addRow(input));
+    this.state = {orders: initialArray, minSize: 0, totalBuys: "0.0", totalSells: "0.0", cumulativeDelta: "0.0", instrument: "BTC-USD"};
+    this.closeSocket = subscribeToTimer((err: Error, input: TradeMessage) => this.addRow(input), this.state.instrument);
 
     this.minSizeChange = this.minSizeChange.bind(this);
+    this.instrumentChange = this.instrumentChange.bind(this);
   }
 
   addRow(msg: event) {
@@ -83,10 +84,23 @@ export class Tape extends React.Component<TapeProps, TapeState> {
     this.setState({minSize: num});
   }
   
+  instrumentChange(e: React.FormEvent<HTMLInputElement>) {
+    this.setState({instrument: e.currentTarget.value})
+    this.closeSocket();
+    this.closeSocket = subscribeToTimer((err: Error, input: TradeMessage) => this.addRow(input), e.currentTarget.value);
+  }
+  
   render() {
     return (
       <div className="tape">
       <div className="controls">
+        <label>Instrument</label>
+        <select onChange={this.instrumentChange}>
+          <option value="BTC-USD">Bitcoin</option>
+          <option value="BCH-USD">Bitcoin Cash</option>
+          <option value="ETH-USD">Ethereum</option>
+          <option value="LTC-USD">Litecoin</option>
+        </select><br />
         <label>Min Size</label><input type="text" onChange={this.minSizeChange} />
       </div>
 	  <DiffMeter buys={this.state.totalBuys} sells={this.state.totalSells} delta={this.state.cumulativeDelta} />	    
